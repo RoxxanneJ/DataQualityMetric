@@ -2,48 +2,12 @@ import numpy as np
 import pandas as pd
 import evaluation as ev
 import apply_criteria as ac
-import data_preparation.split as sp
+import split as sp
 import time as t
 import random as rd
 from multiprocessing import cpu_count
 from itertools import repeat
 from multiprocessing import get_context
-
-
-def comp_x(df):
-    """
-    Compute the coordinate x of the quality metric for a dataframe. x is a vector of completeness, class balance and
-    (nb of classes * nb of attributes) / nb of samples.
-    :param df: (pandas dataframe) data used for classification, the target for classification must be named 'class'
-    :return: (np.array of float) array with the 3 parts of x: completeness, class balance and
-    (nb of classes * nb of attributes) / nb of samples
-    """
-    try:
-
-        N = df.shape[0]  # number of samples
-        At = df.shape[1] - 1  # number of attributes (-1 because we don't count the class as an attribute)
-        completeness = df.isnull().sum().sum() / (N * At)  # ratio of missing values
-        #df.dropna(inplace=True)  # everything else is computed excluding missing values
-
-        N = df.shape[0]  # number of samples
-        At = df.shape[1] - 1  # number of attributes (-1 because we don't count the class as an attribute)
-        classes = df['class'].unique()
-        nb_class = len(classes)  # number of classes
-        if nb_class > 1:
-            class_balance = 0
-            class_perf = N / nb_class  # number of samples in a class if data was perfectly balanced
-            # absolute difference between the perfect number of elements in a class and the number of elements in each class
-            for c in classes:
-                class_balance += abs(df.loc[df['class'] == c].shape[0] - class_perf)
-            class_balance = class_balance / N  # divided by N to keep everything in [0, 1]
-            dimensionality = nb_class * At / N  # (nb of classes * nb of attributes) / nb of samples
-        else:
-            class_balance = 1
-            dimensionality = 1
-    except ValueError as e:
-        print("computation of x failed: ", e)
-
-    return np.array([class_balance, completeness, dimensionality])
 
 
 def comp_qa(base_accs, var_accs, nb_classes):
@@ -157,7 +121,6 @@ def dq_metric(df, crt_names, models, data_name, save_name, nb_iter=30):
     """
     try:
         start = t.time()
-        x = comp_x(df)
         nb_classes = df['class'].nunique()
         var_accs = np.zeros((nb_iter, len(models), len(crt_names)))
         var_f1s = np.zeros((nb_iter, len(models), len(crt_names)))
@@ -182,10 +145,10 @@ def dq_metric(df, crt_names, models, data_name, save_name, nb_iter=30):
         np.save("output/variations/" + save_name + "_var_f1s.npy", var_f1s)
         np.save("output/base_scores/" + save_name + "_base_accs.npy", base_accs)
         np.save("output/base_scores/" + save_name + "_base_f1s.npy", base_f1s)
-        np.save("output/scores/" + save_name + "_(x,qa,qa1,qa2,qf,qf1,qf2,time).npy",
-                (x, (qa, qa1, qa2), (qf, qf1, qf2), stop-start))
+        np.save("output/scores/" + save_name + "_(qa,qf,time).npy",
+                ((qa, qa1, qa2), (qf, qf1, qf2), stop-start))
 
-        print("\n**********\n", save_name, "\nx=", x, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
+        print("\n**********\n", save_name, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
               "\nqf=", qf, "with qf1=", qf1, " and qf2=", qf2)
     except ValueError as e:
         print("generation of the data quality report failed: ", e)
@@ -249,7 +212,6 @@ def dq_metric_para(nb_iter, df, crt_names, models, data_name, save_name):
     """
     try:
         start = t.time()
-        x = comp_x(df)
         nb_classes = df['class'].nunique()
         cpus = cpu_count()  # we use all cpus
         with get_context("spawn").Pool(cpus) as pool:
@@ -266,9 +228,9 @@ def dq_metric_para(nb_iter, df, crt_names, models, data_name, save_name):
         np.save("output/variations/" + save_name + "_noTest_var_f1s.npy", var_f1s)
         np.save("output/base_scores/" + save_name + "_noTest_base_accs.npy", base_accs)
         np.save("output/base_scores/" + save_name + "_noTest_base_f1s.npy", base_f1s)
-        np.save("output/scores/" + save_name + "_noTest_(x,qa,qf,time).npy",
-                (x, (qa, qa1, qa2), (qf, qf1, qf2), stop - start))
-        print("\n**********\n", save_name, "\nx=", x, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
+        np.save("output/scores/" + save_name + "_noTest_(qa,qf,time).npy",
+                ((qa, qa1, qa2), (qf, qf1, qf2), stop - start))
+        print("\n**********\n", save_name, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
               "\nqf=", qf, "with qf1=", qf1, " and qf2=", qf2, "\ntime=", stop - start)
     except ValueError as e:
         print(e)
@@ -304,7 +266,6 @@ def dq_metric_test(X_train, X_test, y_train, y_test, crt_names, models, data_nam
         X_train['class'] = y_train.copy()
         X_test['class'] = y_test.copy()
         df = pd.concat([X_train, X_test])
-        x = comp_x(df)
         nb_classes = df['class'].nunique()
 
         X_train.dropna(inplace=True)
@@ -327,10 +288,10 @@ def dq_metric_test(X_train, X_test, y_train, y_test, crt_names, models, data_nam
         np.save("output/variations/" + save_name + "_var_f1s.npy", var_f1s)
         np.save("output/base_scores/" + save_name + "_base_accs.npy", base_accs)
         np.save("output/base_scores/" + save_name + "_base_f1s.npy", base_f1s)
-        np.save("output/scores/" + save_name + "_(x,y,y1,y2,z,z1,z2,time).npy",
-                (x, (qa, qa1, qa2), (qf, qf1, qf2), stop-start))
+        np.save("output/scores/" + save_name + "_(qa,qf,time).npy",
+                ((qa, qa1, qa2), (qf, qf1, qf2), stop-start))
 
-        print("\n**********\n", save_name, "\nx=", x, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
+        print("\n**********\n", save_name, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
               "\nqf=", qf, "with qf1=", qf1, " and qf2=", qf2)
     except ValueError as e:
         print("generation of the data quality report failed: ", e)
@@ -366,7 +327,6 @@ def dq_metric_test_para(X_train, X_test, y_train, y_test, crt_names, models, dat
         X_train['class'] = y_train.copy()
         X_test['class'] = y_test.copy()
         df = pd.concat([X_train, X_test])
-        x = comp_x(df)
         nb_classes = df['class'].nunique()
 
         X_train.dropna(inplace=True)
@@ -395,10 +355,10 @@ def dq_metric_test_para(X_train, X_test, y_train, y_test, crt_names, models, dat
         np.save("output/variations/" + save_name + "_var_f1s.npy", var_f1s)
         np.save("output/base_scores/" + save_name + "_base_accs.npy", base_accs)
         np.save("output/base_scores/" + save_name + "_base_f1s.npy", base_f1s)
-        np.save("output/scores/" + save_name + "_(x,qa,qf,time).npy",
-                (x, (qa, qa1, qa2), (qf, qf1, qf2), stop-start))
+        np.save("output/scores/" + save_name + "_(qa,qf,time).npy",
+                ((qa, qa1, qa2), (qf, qf1, qf2), stop-start))
 
-        print("\n**********\n", save_name, "\nx=", x, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
+        print("\n**********\n", save_name, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
               "\nqf=", qf, "with qf1=", qf1, " and qf2=", qf2, "\ntime=", stop-start)
     except ValueError as e:
         print("generation of the data quality report failed: ", e)
