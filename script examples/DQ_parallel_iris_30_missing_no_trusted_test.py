@@ -6,7 +6,7 @@ models = ['logistic regression', 'knn', 'decision tree', 'random forest', 'ada b
           'svc', 'gaussian process', 'mlp', 'sgd', 'gradient boosting']
 crt_names = ['missing', 'fuzzing', 'outlier']
 
-iris_m_30 = pd.read_csv("../dataset/iris/missing/iris_missing_30.csv")
+iris_m_30 = pd.read_csv("dataset/iris_missing_30.csv")
 iris_m_30.dropna(inplace=True)
 
 if __name__ == '__main__':

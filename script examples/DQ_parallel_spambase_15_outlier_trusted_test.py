@@ -6,10 +6,10 @@ models = ['logistic regression', 'knn', 'decision tree', 'random forest', 'ada b
           'svc', 'gaussian process', 'mlp', 'sgd', 'gradient boosting']
 crt_names = ['missing', 'fuzzing', 'outlier']
 
-spambase_o_15 = pd.read_csv("../dataset/spambase/trusted_test/spambase_train_outlier_15.csv")
+spambase_o_15 = pd.read_csv("dataset/spambase_train_outlier_15.csv")
 y_train = spambase_o_15['class'].copy()
 spambase_o_15.drop(columns=['class'], inplace=True)
-spambase_test = pd.read_csv("../dataset/spambase/trusted_test/spambase_test.csv")
+spambase_test = pd.read_csv("dataset/spambase_test.csv")
 y_test = spambase_test['class'].copy()
 spambase_test.drop(columns=['class'], inplace=True)
 

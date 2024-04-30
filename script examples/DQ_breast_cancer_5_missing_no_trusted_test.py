@@ -6,7 +6,7 @@ models = ['logistic regression', 'knn', 'decision tree', 'random forest', 'ada b
           'svc', 'gaussian process', 'mlp', 'sgd', 'gradient boosting']
 crt_names = ['missing', 'fuzzing', 'outlier']
 
-cancer_m_5 = pd.read_csv("../dataset/cancer/missing/cancer_missing_5.csv")
+cancer_m_5 = pd.read_csv("dataset/cancer_missing_5.csv")
 cancer_m_5.dropna(inplace=True)
 
 if __name__ == '__main__':

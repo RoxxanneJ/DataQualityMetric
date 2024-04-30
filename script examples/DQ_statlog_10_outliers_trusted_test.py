@@ -6,10 +6,10 @@ models = ['logistic regression', 'knn', 'decision tree', 'random forest', 'ada b
           'svc', 'gaussian process', 'mlp', 'sgd', 'gradient boosting']
 crt_names = ['missing', 'fuzzing', 'outlier']
 
-statlog_o_10 = pd.read_csv("../dataset/statlog/trusted_test/statlog_train_outlier_10.csv")
+statlog_o_10 = pd.read_csv("dataset/statlog_train_outlier_10.csv")
 y_train = statlog_o_10['class'].copy()
 statlog_o_10.drop(columns=['class'], inplace=True)
-statlog_test = pd.read_csv("../dataset/statlog/trusted_test/statlog_test.csv")
+statlog_test = pd.read_csv("dataset/statlog_test.csv")
 y_test = statlog_test['class'].copy()
 statlog_test.drop(columns=['class'], inplace=True)
 
