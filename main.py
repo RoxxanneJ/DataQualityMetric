@@ -1,6 +1,5 @@
 import pandas as pd
 import data_quality_metric as dqm
-import repairability as rp
 from multiprocessing import freeze_support
 
 models = ['logistic regression', 'knn', 'decision tree', 'random forest', 'ada boost', 'naive bayes', 'xgboost',

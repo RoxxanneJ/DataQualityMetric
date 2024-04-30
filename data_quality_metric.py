@@ -103,8 +103,8 @@ def dq_metric(df, crt_names, models, data_name, save_name, nb_iter=30):
                                 all classification models in models, and over all errors in crt_names
                             -> a file with the f1 scores when 5% of errors is injected in data over 30 resamplings,
                                 all classification models in models, and over all errors in crt_names
-        -output/scores      -> a file with the tuple (x,qa,qa1,qa2,qf,qf1,qf2,time) with time being the execution time and the
-                                parameters for the metric as defined in the paper
+        -output/scores      -> a file with the tuple (x,qa,qa1,qa2,qf,qf1,qf2,time) with time being the execution time
+                                and the parameters for the metric as defined in the paper
         -output/base_scores -> a file with the accuracies evaluated over 30 resamplings and for all classification
                                 models in models
                             -> a file with the f1 scores evaluated over 30 resamplings and for all classification
@@ -193,8 +193,8 @@ def dq_metric_para(nb_iter, df, crt_names, models, data_name, save_name):
                                 nb_iter resamplings, all classification models in models, and all errors in crt_names
                             -> a file with the f1 scores when 5% of errors is injected in data over:
                                 nb_iter resamplings, all classification models in models, and all errors in crt_names
-        -output/scores      -> a file with the tuple (x,qa,qa1,qa2,qf,qf1,qf2,time) with time being the execution time and the
-                                parameters for the metric as defined in the paper
+        -output/scores      -> a file with the tuple (x,qa,qa1,qa2,qf,qf1,qf2,time) with time being the execution time
+                                and the parameters for the metric as defined in the paper
         -output/base_scores -> a file with the accuracies evaluated over nb_iter resamplings and for all classification
                                 models in models
                             -> a file with the f1 scores evaluated over nb_iter resamplings and for all classification
