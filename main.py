@@ -24,14 +24,4 @@ test.drop(columns=["class"], inplace=True)
 
 if __name__ == '__main__':
     freeze_support()
-    dqm.dq_metric_test_para(train_deteriorated, test, y_train_deteriorated, y_test, crt_names, models,
-                            'iris', 'iris_deteriorated_example')
-    dqm.dq_metric_test_para(train_repaired, test, y_train_repaired, y_test, crt_names, models,
-                            'iris', 'iris_repaired_example')
-    _, qa_det, _, _ = pd.read_csv("output/scores/iris_deteriorated_example_(x,qa,qf,time).npy")
-    perf_deteriorated = 1 - qa_det[1]  # we use 1-qa1
-    _, qa_rep, _, _ = pd.read_csv("output/scores/iris_repaired_example_(x,qa,qf,time).npy")
-    perf_repaired = 1 - qa_rep[1]
 
-    rep_deg = rp.repairability_degree(perf_deteriorated, perf_repaired)
-    print(rep_deg)
