@@ -151,7 +151,7 @@ def dq_metric(df, crt_names, models, data_name, save_name, nb_iter=30):
         print("\n**********\n", save_name, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
               "\nqf=", qf, "with qf1=", qf1, " and qf2=", qf2)
     except ValueError as e:
-        print("generation of the data quality report failed: ", e)
+        print("computation of the data quality metric failed: ", e)
     return 0
 
 
@@ -180,7 +180,7 @@ def dq_metric_one_iter(k, df, crt_names, models, data_name):
         base_acc, base_f1 = base_scores(X_train, X_test, y_train, y_test, models, data_name)
         var_acc, var_f1 = ac.apply_crt(X_train, X_test, y_train, y_test, crt_names, models, data_name)
     except ValueError as e:
-        print("generation of the data quality report failed: ", e)
+        print("computation of the data quality metric failed: ", e)
     return var_acc, var_f1, base_acc, base_f1
 
 
@@ -233,7 +233,7 @@ def dq_metric_para(nb_iter, df, crt_names, models, data_name, save_name):
         print("\n**********\n", save_name, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
               "\nqf=", qf, "with qf1=", qf1, " and qf2=", qf2, "\ntime=", stop - start)
     except ValueError as e:
-        print(e)
+        print("computation of the data quality metric failed: ", e)
     return 0
 
 
@@ -294,7 +294,7 @@ def dq_metric_test(X_train, X_test, y_train, y_test, crt_names, models, data_nam
         print("\n**********\n", save_name, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
               "\nqf=", qf, "with qf1=", qf1, " and qf2=", qf2)
     except ValueError as e:
-        print("generation of the data quality report failed: ", e)
+        print("computation of the data quality metric failed: ", e)
     return 0
 
 
@@ -361,5 +361,5 @@ def dq_metric_test_para(X_train, X_test, y_train, y_test, crt_names, models, dat
         print("\n**********\n", save_name, "\nqa=", qa, "with qa1=", qa1, " and qa2=", qa2,
               "\nqf=", qf, "with qf1=", qf1, " and qf2=", qf2, "\ntime=", stop-start)
     except ValueError as e:
-        print("generation of the data quality report failed: ", e)
+        print("computation of the data quality metric failed: ", e)
     return 0

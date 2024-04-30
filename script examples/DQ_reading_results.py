@@ -4,6 +4,7 @@ import numpy as np
 
 ex_cancer_qa, ex_cancer_qf, ex_cancer_time = np.load("output/scores/example_cancer_5_missing_(qa,qf,time).npy",
                                                      allow_pickle=True)
+
 print("DQ score for the dataset Breast Cancer with 5% of missing values:\n qa: ", ex_cancer_qa,
       "\n qf: ", ex_cancer_qf, "\n computation time: ", ex_cancer_time)
 

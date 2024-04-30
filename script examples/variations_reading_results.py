@@ -2,7 +2,6 @@ import numpy as np
 
 models = ['logistic regression', 'knn', 'decision tree', 'random forest', 'ada boost', 'naive bayes', 'xgboost',
           'svc', 'gaussian process', 'mlp', 'sgd', 'gradient boosting']
-
 crt_names = ['missing', 'fuzzing', 'outlier']
 
 # Reading intermediate results (accuracy and f1 scores when 5% of the errors in crt_names are injected in data)
