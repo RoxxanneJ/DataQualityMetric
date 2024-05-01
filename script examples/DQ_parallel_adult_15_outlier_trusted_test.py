@@ -6,18 +6,18 @@ models = ['logistic regression', 'knn', 'decision tree', 'random forest', 'ada b
           'svc', 'gaussian process', 'mlp', 'sgd', 'gradient boosting']
 crt_names = ['missing', 'fuzzing', 'outlier']
 
-spambase_o_15 = pd.read_csv("dataset/spambase_train_outlier_15.csv")
-y_train = spambase_o_15['class'].copy()
-spambase_o_15.drop(columns=['class'], inplace=True)
-spambase_test = pd.read_csv("dataset/spambase_test.csv")
-y_test = spambase_test['class'].copy()
-spambase_test.drop(columns=['class'], inplace=True)
+adult_o_15 = pd.read_csv("dataset/adult_train_outlier_15.csv")
+y_train = adult_o_15['class'].copy()
+adult_o_15.drop(columns=['class'], inplace=True)
+adult_test = pd.read_csv("dataset/adult_test.csv")
+y_test = adult_test['class'].copy()
+adult_test.drop(columns=['class'], inplace=True)
 
 if __name__ == '__main__':
     freeze_support()
     # parallel on the models training
-    dqm.dq_metric_test_para(spambase_o_15, spambase_test, y_train, y_test, crt_names, models, 'spambase',
-                            'example_spambase_15_outlier')
+    dqm.dq_metric_test_para(adult_o_15, adult_test, y_train, y_test, crt_names, models, 'adult',
+                            'example_adult_15_outlier')
     # .npy files with the metric will be saved in the directory output/scores/, intermediate results are saved in the
     # directory output/base_scores/ (accuracies and f1 scores)
     # and in the directory output/variations/ (accuracies and f1 scores when 5% of the errors in crt_names are injected

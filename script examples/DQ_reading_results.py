@@ -5,20 +5,24 @@ import numpy as np
 ex_cancer_qa, ex_cancer_qf, ex_cancer_time = np.load("output/scores/example_cancer_5_missing_(qa,qf,time).npy",
                                                      allow_pickle=True)
 
-print("DQ score for the dataset Breast Cancer with 5% of missing values:\n qa: ", ex_cancer_qa,
-      "\n qf: ", ex_cancer_qf, "\n computation time: ", ex_cancer_time)
+print("DQ score for the dataset Breast Cancer with 5% of missing values:\n qa: ", ex_cancer_qa[0], " with qa1: ",
+      ex_cancer_qa[1], " and qa2: ", ex_cancer_qa[2], "\n qf: ", ex_cancer_qf[0], " with qf1: ", ex_cancer_qf[1],
+      " and qf2: ", ex_cancer_qf[2], "\n computation time: ", ex_cancer_time)
 
 ex_iris_qa, ex_iris_qf, ex_iris_time = np.load("output/scores/example_iris_30_missing_noTest_(qa,qf,time).npy",
                                                allow_pickle=True)
-print("DQ score for the dataset Iris with 30% of missing values:\n qa: ", ex_iris_qa,
-      "\n qf: ", ex_iris_qf, "\n computation time: ", ex_iris_time)
+print("DQ score for the dataset Iris with 30% of missing values:\n qa: ", ex_iris_qa[0], " with qa1: ",
+      ex_iris_qa[1], " and qa2: ", ex_iris_qa[2], "\n qf: ", ex_iris_qf[0], " with qf1: ", ex_iris_qf[1],
+      " and qf2: ", ex_iris_qf[2], "\n computation time: ", ex_iris_time)
 
-ex_spambase_qa, ex_spambase_qf, ex_spambase_time = np.load("output/scores/example_spambase_15_outlier_(qa,qf,time).npy",
-                                                           allow_pickle=True)
-print("DQ score for the dataset Spambase with 15% of outliers:\n qa: ", ex_spambase_qa,
-      "\n qf: ", ex_spambase_qf, "\n computation time: ", ex_spambase_time)
+ex_adult_qa, ex_adult_qf, ex_adult_time = np.load("output/scores/example_adult_15_outlier_(qa,qf,time).npy",
+                                                  allow_pickle=True)
+print("DQ score for the dataset Adult with 15% of outliers:\n qa: ", ex_adult_qa[0], " with qa1: ",
+      ex_adult_qa[1], " and qa2: ", ex_adult_qa[2], "\n qf: ", ex_adult_qf[0], " with qf1: ", ex_adult_qf[1],
+      " and qf2: ", ex_adult_qf[2], "\n computation time: ", ex_adult_time)
 
 ex_statlog_qa, ex_statlog_qf, ex_statlog_time = np.load("output/scores/example_statlog_10_outlier_(qa,qf,time).npy",
                                                         allow_pickle=True)
-print("DQ score for the dataset Statlog with 10% of outliers:\n qa: ", ex_statlog_qa,
-      "\n qf: ", ex_statlog_qf, "\n computation time: ", ex_statlog_time)
+print("DQ score for the dataset Statlog with 10% of outliers:\n qa: ", ex_statlog_qa[0], " with qa1: ",
+      ex_statlog_qa[1], " and qa2: ", ex_statlog_qa[2], "\n qf: ", ex_statlog_qf[0], " with qf1: ", ex_statlog_qf[1],
+      " and qf2: ", ex_statlog_qf[2], "\n computation time: ", ex_statlog_time)

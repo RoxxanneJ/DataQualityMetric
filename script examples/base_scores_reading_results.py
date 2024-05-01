@@ -7,16 +7,32 @@ models = ['logistic regression', 'knn', 'decision tree', 'random forest', 'ada b
 
 # When trusted test data are available accuracy and f1 score are computed once for each model,
 # which results in 12 scores
-ex_spambase_accs = np.load("output/base_scores/example_spambase_15_outlier_base_accs.npy")
-ex_spambase_f1s = np.load("output/base_scores/example_spambase_15_outlier_base_f1s.npy")
+ex_adult_accs = np.load("output/base_scores/example_adult_15_outlier_base_accs.npy")
+ex_adult_f1s = np.load("output/base_scores/example_adult_15_outlier_base_f1s.npy")
+print("\n****** Adult with 15% of outliers ******\n")
+for k in range(len(models)):
+    print(models[k], " accuracy=", ex_adult_accs[k], " f1 score=", ex_adult_f1s[k])
 
 ex_statlog_accs = np.load("output/base_scores/example_statlog_10_outlier_base_accs.npy")
 ex_statlog_f1s = np.load("output/base_scores/example_statlog_10_outlier_base_f1s.npy")
+print("\n****** Statlog with 10% of outliers ******\n")
+for k in range(len(models)):
+    print(models[k], " accuracy=", ex_statlog_accs[k], " f1 score=", ex_statlog_f1s[k])
 
 # When trusted test data are not available accuracy and f1 score are computed for 30 samplings of train and test for
 # each model, which results in 360 (30x12) scores
 ex_cancer_accs = np.load("output/base_scores/example_cancer_5_missing_base_accs.npy")
+ex_cancer_accs = np.mean(ex_cancer_accs, axis=0)  # We compute the mean of the 30 samplings
 ex_cancer_f1s = np.load("output/base_scores/example_cancer_5_missing_base_f1s.npy")
+ex_cancer_f1s = np.mean(ex_cancer_f1s, axis=0)
+print("\n****** Breast Cancer with 5% of missing values ******\n")
+for k in range(len(models)):
+    print(models[k], " accuracy=", ex_cancer_accs[k], " f1 score=", ex_cancer_f1s[k])
 
 ex_iris_accs = np.load("output/base_scores/example_iris_30_missing_noTest_base_accs.npy")
+ex_iris_accs = np.mean(ex_iris_accs, axis=0)  # We compute the mean of the 30 samplings
 ex_iris_f1s = np.load("output/base_scores/example_iris_30_missing_noTest_base_f1s.npy")
+ex_iris_f1s = np.mean(ex_iris_f1s, axis=0)
+print("\n****** Iris with 30% of missing values ******\n")
+for k in range(len(models)):
+    print(models[k], " accuracy=", ex_iris_accs[k], " f1 score=", ex_iris_f1s[k])
